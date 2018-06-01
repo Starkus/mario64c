@@ -15,11 +15,11 @@ LinkedList<Component*> GameObject::getComponents() {
 template <typename T>
 T* GameObject::getComponentOfType() {
 	for (int i = 0; i < components.size(); ++i) {
-		Component component = components.at(i);
-		if (T* dynamic_cast<T*>(&component) != NULL) {
+		Component component = components.get(i);
+		if (dynamic_cast<T*>(&component) != nullptr) {
 			return &component;
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }

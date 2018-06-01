@@ -37,7 +37,7 @@ const int WIDTH = 1024;
 const int HEIGHT = 768;
 
 
-int main( void )
+int main(int argc, char *argv[])
 {
 	// Initialise GLFW
 	if( !glfwInit() )

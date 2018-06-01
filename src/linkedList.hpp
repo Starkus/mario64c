@@ -14,7 +14,7 @@ class LinkedList {
 
 		_node<T>* last = root;
 		if (!root)
-			return NULL;
+			return nullptr;
 
 		while (true) {
 			if (!last->next)
@@ -35,14 +35,14 @@ class LinkedList {
 
 public:
 	LinkedList() {
-		root = NULL;
+		root = nullptr;
 	}
 	
 	int size() {
 		int s = 0;
 		_node<T> *current = root;
 		while (true) {
-			if (current == NULL)
+			if (current == nullptr)
 				return s;
 			current = current->next;
 			s++;
@@ -53,7 +53,7 @@ public:
 	void add(T value) {
 		_node<T> *newnode = new _node<T>;
 		newnode->value = value;
-		newnode->next = NULL;
+		newnode->next = nullptr;
 
 		if (!root)
 			root = newnode;
@@ -66,13 +66,13 @@ public:
 		return node->value;
 	}
 	void remove(int index) {
-		if (i == 0) {
+		if (index == 0) {
 			_node<T> *second = root->next;
 			delete root;
 			root = second;
 		}
 		else {
-			_node<T> *prev = getNodeByIndex(i - 1);
+			_node<T> *prev = getNodeByIndex(index - 1);
 			_node<T> *next = prev->next->next;
 			delete prev->next;
 			prev->next = next;
