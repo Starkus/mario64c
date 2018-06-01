@@ -54,8 +54,8 @@ int main(int argc, char *argv[])
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(WIDTH, HEIGHT, "Mayor", NULL, NULL);
-	if( window == NULL ){
+	window = glfwCreateWindow(WIDTH, HEIGHT, "Mayor", nullptr, nullptr);
+	if( window == nullptr ){
 		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
 		getchar();
 		glfwTerminate();
@@ -64,6 +64,7 @@ int main(int argc, char *argv[])
 	glfwMakeContextCurrent(window);
 
 	// Initialize GLEW
+	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW\n");
 		getchar();
@@ -84,7 +85,10 @@ int main(int argc, char *argv[])
 
 	// A texture
 	GLuint image = loadDDS("../media/mario.dds");
-
+	if (!image) {
+		fprintf(stderr, "Failed to load sample texture");
+		return -1;
+	}
 	// Load dummy model
 	model.importFromObj("../media/350z.obj");
 
