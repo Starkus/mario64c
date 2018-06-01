@@ -1,0 +1,188 @@
+# Blender MTL File: 'Cars.blend'
+# Material Count: 18
+
+newmtl Emit_Blanco
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.644761 0.643401 0.643401
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl FC
+Ns 1000.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.288427 0.294540 0.313331
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures/350z/fc.png
+map_Bump textures/350z/fc_nor.png
+refl textures/reflection.png
+
+newmtl Faros_Delanteros
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.425438 0.425438 0.425438
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+refl textures/reflection.png
+
+newmtl Faros_Traseros
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.437971 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+refl textures/reflection.png
+
+newmtl Gris
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.028174 0.028174 0.028174
+Ks 0.100000 0.100000 0.100000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures/350z/sparco.png
+
+newmtl Gris_NONE
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.028174 0.028174 0.028174
+Ks 0.100000 0.100000 0.100000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Gris_vinilos
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.028174 0.028174 0.028174
+Ks 0.100000 0.100000 0.100000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures/350z/vinyls.png
+
+newmtl HKS
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.100000 0.100000 0.100000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd textures/350z/HKS.png
+map_d textures/350z/HKS.png
+
+newmtl Interior
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.075701 0.075701 0.075701
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+
+newmtl Logo
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 0.990000
+illum 2
+map_Kd textures/350z/logo.png
+map_d textures/350z/logo.png
+
+newmtl Luces
+Ns 7.843137
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 0.417920 0.000000
+Ks 0.235466 0.235466 0.235466
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures/350z/optics.png
+
+newmtl Lunetas
+Ns 17.647059
+Ka 0.000000 0.000000 0.000000
+Kd 0.052809 0.000000 0.085228
+Ks 0.494608 0.000000 0.711956
+Ni 1.000000
+d 0.838410
+illum 2
+refl textures/reflection.png
+
+newmtl Metalico
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.389517 0.389517 0.389517
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+refl textures/reflection.png
+
+newmtl Patente
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures/350z/patente.png
+
+newmtl Pintura
+Ns 56.862745
+Ka 0.000000 0.000000 0.000000
+Kd 0.005596 0.060948 0.003513
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+Sf shaders/carpaint.frag
+map_Kd textures/350z/vinyls.png
+map_Ks textures/350z/vinyls_spec.png
+refl textures/reflection.png
+
+newmtl Plastico_optica
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.263438 0.263438 0.263438
+Ni 1.000000
+d 0.300000
+illum 2
+refl textures/reflection.png
+
+newmtl Rejilla
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.425438 0.425438 0.425438
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 0.990000
+illum 2
+map_Kd textures/350z/rejilla.png
+map_d textures/350z/rejilla.png
+
+newmtl sparco
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.100000 0.100000 0.100000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd textures/350z/sparco.png
+map_d textures/350z/sparco.png
