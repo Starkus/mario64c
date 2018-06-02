@@ -39,6 +39,7 @@ include_directories(
 	external/glew-1.13.0/include/
 	external/assimp-3.0.1270/include/
 	external/bullet-2.81-rev2613/src/
+	external/rapidxml-1.13/
 	.
 )
 
@@ -70,11 +71,13 @@ add_executable(mario64
 	common/texture.cpp
 	common/controls.cpp
 	common/objloader.cpp
+	common/vboindexer.cpp
 
 	src/vertex.glsl
 	src/fragment.glsl
 
 	media/mario.dds
+	media/skeltest.dae
 )
 target_link_libraries(mario64
 	${ALL_LIBS}
