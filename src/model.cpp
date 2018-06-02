@@ -22,7 +22,7 @@ void Model::makeVBOs() {
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(vec3), &normals[0], GL_STATIC_DRAW);
 
-	printf("Indices: %d\n", indices.size());
+	printf("Indices: %d\n", (int) indices.size());
 	glGenBuffers(1, &indexbuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
@@ -137,7 +137,15 @@ int Model::importFromDae(const char *filename) {
 	doc.parse<0>((char*) contents.c_str());
 
 	xml_node<> *root = doc.first_node("COLLADA");
-	xml_node<> *geo = root->first_node("library_geometries");
+	xml_node<> *geometry = root->first_node("library_geometries")->
+			first_node("geometry");
+	xml_node<> *mesh = geometry->first_node("mesh");
+
+	for (xml_node<> *n = mesh->first_node("source"); n;
+			n = n->next_sibling("source")) {
+		printf("source: %s\n", n->first_attribute("id")->value());
+		printf("array value: %s\n", n->first_node("float_array")->value());
+	}
 
 	return 0;
 }
