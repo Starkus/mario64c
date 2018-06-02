@@ -3,9 +3,11 @@
 #include "glcontext.hpp"
 #include "common/controls.hpp"
 #include "common/vboindexer.hpp"
+#include "stringUtils.hpp"
 
 #include <stdio.h>
 #include <fstream>
+#include <vector>
 #include <glm/gtc/matrix_transform.hpp>
 #include "rapidxml.hpp"
 
@@ -145,6 +147,12 @@ int Model::importFromDae(const char *filename) {
 			n = n->next_sibling("source")) {
 		printf("source: %s\n", n->first_attribute("id")->value());
 		printf("array value: %s\n", n->first_node("float_array")->value());
+		const char* s = n->first_node("float_array")->value();
+
+		std::vector<std::string> words = splitString(s, ' ');
+		for (std::vector<std::string>::iterator w = words.begin(); w != words.end(); ++w) {
+			printf("%s\n", (*w).c_str());
+		}
 	}
 
 	return 0;
