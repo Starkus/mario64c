@@ -18,6 +18,7 @@ GLFWwindow* window;
 #include "common/texture.hpp"
 #include "common/controls.hpp"
 #include "common/objloader.hpp"
+#include "common/vboindexer.hpp"
 
 #include "glcontext.hpp"
 #include "model.hpp"
@@ -91,6 +92,7 @@ int main(int argc, char *argv[])
 	}
 	// Load dummy model
 	model.importFromObj("../media/350z.obj");
+	model.importFromDae("../media/skeltest.dae");
 
 	// Load some shaders
 	GLuint programID = LoadShaders("vertex.glsl", "fragment.glsl");
@@ -169,6 +171,15 @@ int main(int argc, char *argv[])
 	} // Check if the ESC key was pressed or the window was closed
 	while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
 		   glfwWindowShouldClose(window) == 0);
+
+	// Cleanup VBO and shader
+	//glDeleteBuffers(1, &vertexbuffer);
+	//glDeleteBuffers(1, &uvbuffer);
+	//glDeleteBuffers(1, &normalbuffer);
+	//glDeleteBuffers(1, &elementbuffer);
+	glDeleteProgram(programID);
+	//glDeleteTextures(1, &Texture);
+	glDeleteVertexArrays(1, &VertexArrayID);
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
