@@ -2,8 +2,12 @@
 #include "common/objloader.hpp"
 #include "glcontext.hpp"
 #include "common/controls.hpp"
+#include "common/vboindexer.hpp"
 
+#include <stdio.h>
+#include <fstream>
 #include <glm/gtc/matrix_transform.hpp>
+#include "rapidxml.hpp"
 
 void Model::makeVBOs() {
 	glGenBuffers(1, &vertexbuffer);
@@ -17,6 +21,11 @@ void Model::makeVBOs() {
 	glGenBuffers(1, &normalbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(vec3), &normals[0], GL_STATIC_DRAW);
+
+	printf("Indices: %d\n", indices.size());
+	glGenBuffers(1, &indexbuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
 }
 
 void Model::bindBuffers() {
@@ -41,14 +50,19 @@ void Model::bindBuffers() {
 	glEnableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+	// Buffer the vertices
+	//glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vec3), &vertices[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbuffer);
 }
 
 void Model::drawBuffers() {
 	// Draw bound buffers, to bind call bindBuffers() first.
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vec3), &vertices[0], GL_STATIC_DRAW);
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, (void*)0);
 
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 }
 
 void Model::makeModelMatrix(vec3 position, vec3 scale) {
@@ -85,10 +99,45 @@ void Model::draw(vec3 position, vec3 scale) {
 
 int Model::importFromObj(const char *filename) {
 	// Import model
-	bool ok = loadOBJ(filename, vertices, uvs, normals);
+	std::vector<vec3> t_vertices;
+	std::vector<vec2> t_uvs;
+	std::vector<vec3> t_normals;
 
-	if (ok)
+	bool ok = loadOBJ(filename, t_vertices, t_uvs, t_normals);
+
+	if (ok) {
+		indexVBO(t_vertices, t_uvs, t_normals, indices, vertices, uvs, normals);
+
 		makeVBOs();
+	}
 
 	return ok;
+}
+
+int Model::importFromDae(const char *filename) {
+	using namespace rapidxml;
+
+	std::ifstream in(filename, std::ios::in | std::ios::binary);
+	if (!in)
+	{
+		printf("Impossible to open COLLADA file '%s'\n", filename);
+		return -1;
+	}
+
+	std::string contents;
+	in.seekg(0, std::ios::end);
+	contents.resize(in.tellg());
+	in.seekg(0, std::ios::beg);
+	in.read(&contents[0], contents.size());
+	in.close();
+
+	//printf("%s\n", contents.c_str());
+
+	xml_document<> doc;
+	doc.parse<0>((char*) contents.c_str());
+
+	xml_node<> *root = doc.first_node("COLLADA");
+	xml_node<> *geo = root->first_node("library_geometries");
+
+	return 0;
 }

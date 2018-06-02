@@ -13,11 +13,13 @@ private:
 	std::vector<vec3> vertices;
 	std::vector<vec2> uvs;
 	std::vector<vec3> normals;
+	std::vector<unsigned short> indices;
 
 	// GL Buffers
 	GLuint vertexbuffer;
 	GLuint uvbuffer;
 	GLuint normalbuffer;
+	GLuint indexbuffer;
 
 	void makeVBOs();
 	void bindBuffers();
@@ -29,4 +31,5 @@ public:
 	void draw(vec3 position, vec3 scale);
 
 	int importFromObj(const char*);
+	int importFromDae(const char*);
 };
