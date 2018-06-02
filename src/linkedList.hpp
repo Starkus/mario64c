@@ -62,6 +62,9 @@ public:
 	}
 
 	T get(int index) {
+		if (index < 0) {
+			index = size() + index;
+		}
 		_node<T> *node = getNodeByIndex(index);
 		return node->value;
 	}

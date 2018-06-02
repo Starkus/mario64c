@@ -111,14 +111,21 @@ int main(int argc, char *argv[])
 	GameObject *obj = scene.spawn();
 	obj->scale = vec3(0.2f);
 	obj->addComponent<ComponentMeshRenderer>();
-	ComponentMeshRenderer *renderer =  (ComponentMeshRenderer*) obj->getComponents().get(obj->getComponents().size()-1);
+	ComponentMeshRenderer *renderer =  (ComponentMeshRenderer*) obj->getComponents().get(-1);
 	renderer->setModel(&model);
 
 	GameObject *obj2 = scene.spawn();
 	obj2->scale = vec3(0.15f);
 	obj2->position = vec3(15, 0, 0);
 	obj2->addComponent<ComponentMeshRenderer>();
-	renderer = (ComponentMeshRenderer*)obj2->getComponents().get(obj2->getComponents().size() - 1);
+	renderer = (ComponentMeshRenderer*)obj2->getComponents().get(-1);
+	renderer->setModel(&model);
+	
+	GameObject *obj3 = scene.spawn();
+	obj3->scale = vec3(0.1f);
+	obj3->position = vec3(-15, 0, 0);
+	obj3->addComponent<ComponentMeshRenderer>();
+	renderer = (ComponentMeshRenderer*)obj3->getComponents().get(-1);
 	renderer->setModel(&model);
 
 	// GAME LOOP
@@ -149,7 +156,8 @@ int main(int argc, char *argv[])
 		View = getViewMatrix();
 
 
-		//model.draw(vec3(0), vec3(0.2f));
+		scene.gameObjects.get(0)->position = vec3(sinf(time * 50), 0, 0);
+		
 		scene.update();
 
 		// Matrix
