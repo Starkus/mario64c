@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.79.0 commit date:2018-03-22, commit time:14:10, hash:f4dc9f9d68b</authoring_tool>
     </contributor>
-    <created>2018-06-02T21:20:03</created>
-    <modified>2018-06-02T21:20:03</modified>
+    <created>2018-06-03T18:23:59</created>
+    <modified>2018-06-03T18:23:59</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -64,10 +64,39 @@
         </technique>
       </profile_COMMON>
     </effect>
+    <effect id="Material_002-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.2467674 0.0372505 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
   </library_effects>
   <library_materials>
     <material id="Material-material" name="Material">
       <instance_effect url="#Material-effect"/>
+    </material>
+    <material id="Material_002-material" name="Material_002">
+      <instance_effect url="#Material_002-effect"/>
     </material>
     <material id="Material_001-material" name="Material_001">
       <instance_effect url="#Material_001-effect"/>
@@ -114,11 +143,17 @@
           <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
           <p>0 0 0 2 0 1 3 0 2 4 2 6 1 2 7 0 2 8 5 3 9 2 3 10 1 3 11 2 4 12 7 4 13 3 4 14 0 5 15 7 5 16 4 5 17 0 10 42 1 10 43 2 10 44 4 11 48 5 11 49 1 11 50 5 12 51 6 12 52 2 12 53 2 13 54 6 13 55 7 13 56 0 14 57 3 14 58 7 14 59</p>
         </triangles>
-        <triangles material="Material_001-material" count="18">
+        <triangles material="Material_001-material" count="10">
           <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
-          <p>5 1 3 10 1 4 6 1 5 8 6 18 13 6 19 9 6 20 4 6 21 9 6 22 5 6 23 6 7 24 11 7 25 7 7 26 7 8 27 8 8 28 4 8 29 15 9 30 13 9 31 12 9 32 10 7 33 15 7 34 11 7 35 11 8 36 12 8 37 8 8 38 9 1 39 14 1 40 10 1 41 5 1 45 9 1 46 10 1 47 8 15 60 12 15 61 13 15 62 4 15 63 8 15 64 9 15 65 6 16 66 10 16 67 11 16 68 7 8 69 11 8 70 8 8 71 15 17 72 14 17 73 13 17 74 10 18 75 14 18 76 15 18 77 11 8 78 15 8 79 12 8 80 9 1 81 13 1 82 14 1 83</p>
+          <p>8 6 18 13 6 19 9 6 20 15 9 30 13 9 31 12 9 32 10 7 33 15 7 34 11 7 35 11 8 36 12 8 37 8 8 38 9 1 39 14 1 40 10 1 41 8 15 60 12 15 61 13 15 62 15 17 72 14 17 73 13 17 74 10 18 75 14 18 76 15 18 77 11 8 78 15 8 79 12 8 80 9 1 81 13 1 82 14 1 83</p>
+        </triangles>
+        <triangles material="Material_002-material" count="8">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
+          <p>5 1 3 10 1 4 6 1 5 4 6 21 9 6 22 5 6 23 6 7 24 11 7 25 7 7 26 7 8 27 8 8 28 4 8 29 5 1 45 9 1 46 10 1 47 4 15 63 8 15 64 9 15 65 6 16 66 10 16 67 11 16 68 7 8 69 11 8 70 8 8 71</p>
         </triangles>
       </mesh>
     </geometry>
@@ -132,6 +167,7 @@
           <bind_material>
             <technique_common>
               <instance_material symbol="Material-material" target="#Material-material"/>
+              <instance_material symbol="Material_002-material" target="#Material_002-material"/>
               <instance_material symbol="Material_001-material" target="#Material_001-material"/>
             </technique_common>
           </bind_material>

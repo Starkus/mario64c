@@ -70,8 +70,17 @@ void Model::bindBuffers() {
 
 void Model::drawBuffers() {
 	// Draw bound buffers, to bind call bindBuffers() first.
-	//glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_SHORT, (void*)0);
-	glDrawRangeElements(GL_TRIANGLES, 10*3, 28*3, (GLsizei)18*3, GL_UNSIGNED_SHORT, (void*)0);
+	int count = offsets[0];
+	int start = 0;
+	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, ((char *)NULL + (start * sizeof(unsigned short))));
+
+	count = offsets[1] - offsets[0];
+	start = offsets[0];
+	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, ((char *)NULL + (start * sizeof(unsigned short))));
+
+	count = indices.size() - offsets[1];
+	start = offsets[1];
+	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, ((char *)NULL + (start * sizeof(unsigned short))));
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
