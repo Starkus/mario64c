@@ -30,13 +30,13 @@ private:
 
 	void makeVBOs();
 	void bindBuffers();
+	void sendMaterial(Material*);
 	void drawBuffers();
-	void makeModelMatrix(vec3 position, quat rotation, vec3 scale);
 
 public:
 	Model();
 	~Model();
-	void draw(vec3 position, quat rotation, vec3 scale);
+	void draw();
 
 	int importFromObj(const char*);
 	int importFromDae(const char*);

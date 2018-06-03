@@ -10,7 +10,6 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include "rapidxml.hpp"
 
@@ -68,48 +67,48 @@ void Model::bindBuffers() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbuffer);
 }
 
+void Model::sendMaterial(Material *mat) {
+	GLuint diffuseId = GLContext::instance()->getProgramUniform("diffuse");
+	GLuint specularId = GLContext::instance()->getProgramUniform("specular");
+	GLuint ambientId = GLContext::instance()->getProgramUniform("ambient");
+	GLuint emmisionId= GLContext::instance()->getProgramUniform("emmision");
+
+	vec4 c = mat->diffuse;
+	glUniform4f(diffuseId, c.r, c.g, c.b, c.a);
+	c = mat->specular;
+	glUniform4f(specularId, c.r, c.g, c.b, c.a);
+	c = mat->ambient;
+	glUniform4f(ambientId, c.r, c.g, c.b, c.a);
+	c = mat->emission;
+	glUniform4f(emmisionId, c.r, c.g, c.b, c.a);
+}
+
 void Model::drawBuffers() {
-	// Draw bound buffers, to bind call bindBuffers() first.
-	int count = offsets[0];
-	int start = 0;
-	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, ((char *)NULL + (start * sizeof(unsigned short))));
+	for (int mat = 0; mat < materials.size(); ++mat) {
+		sendMaterial(&materials[mat]);
 
-	count = offsets[1] - offsets[0];
-	start = offsets[0];
-	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, ((char *)NULL + (start * sizeof(unsigned short))));
+		int start;
+		int count;
 
-	count = indices.size() - offsets[1];
-	start = offsets[1];
-	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, ((char *)NULL + (start * sizeof(unsigned short))));
+		if (mat == 0) {
+			count = offsets[mat];
+			start = 0;
+		}
+		else if (mat == materials.size() - 1) { // If last one
+			count = indices.size() - offsets[mat - 1];
+			start = offsets[mat - 1];
+		}
+		else {
+			count = offsets[mat] - offsets[mat - 1];
+			start = offsets[mat - 1];
+		}
+
+		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_SHORT, ((char *)NULL + (start * sizeof(unsigned short))));
+	}
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
-}
-
-void Model::makeModelMatrix(vec3 position, quat rotation, vec3 scale) {
-	computeMatricesFromInputs();
-	mat4 projection = getProjectionMatrix();
-	mat4 view = getViewMatrix();
-
-	mat4 rot = mat4_cast(rotation);
-
-	mat4 model = mat4(1.0f);
-	model = glm::scale(model, scale);
-	model = glm::translate(model, position);
-	model *= rot;
-
-	mat4 mvp = projection * view * model;
-
-	// Send new matrix to the program (the shaders)
-	GLuint modelMatrixId = GLContext::instance()->getProgramUniform("M");
-	GLuint viewMatrixId = GLContext::instance()->getProgramUniform("V");
-	GLuint projMatrixId = GLContext::instance()->getProgramUniform("P");
-	GLuint mvpMatrixId = GLContext::instance()->getProgramUniform("MVP");
-	glUniformMatrix4fv(modelMatrixId, 1, GL_FALSE, &model[0][0]);
-	glUniformMatrix4fv(viewMatrixId, 1, GL_FALSE, &view[0][0]);
-	glUniformMatrix4fv(projMatrixId, 1, GL_FALSE, &projection[0][0]);
-	glUniformMatrix4fv(mvpMatrixId, 1, GL_FALSE, &mvp[0][0]);
 }
 
 
@@ -117,8 +116,7 @@ Model::Model() {
 	// nothing for now
 }
 
-void Model::draw(vec3 position, quat rotation, vec3 scale) {
-	makeModelMatrix(position, rotation, scale);
+void Model::draw() {
 	bindBuffers();
 	drawBuffers();
 }

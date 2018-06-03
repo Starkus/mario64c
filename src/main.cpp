@@ -147,17 +147,23 @@ int main(int argc, char *argv[])
 		glUseProgram(programID);
 
 		// Matrices
-		glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+		/*glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 		glm::mat4 View = glm::lookAt(
 			glm::vec3(sinf(Time::time()) * 5.0f, 3.0f, 3.0f), // Cam position
 			glm::vec3(0, 0, 0), // Cam looking at
 			glm::vec3(0, 1, 0)  // Up
-		);
+		);*/
 
 		// Debug FPS cam
 		computeMatricesFromInputs();
-		Projection = getProjectionMatrix();
-		View = getViewMatrix();
+		mat4 proj = getProjectionMatrix();
+		mat4 view = getViewMatrix();
+
+		// Send matrices
+		GLuint viewMatrixId = GLContext::instance()->getProgramUniform("V");
+		GLuint projMatrixId = GLContext::instance()->getProgramUniform("P");
+		glUniformMatrix4fv(viewMatrixId, 1, GL_FALSE, &view[0][0]);
+		glUniformMatrix4fv(projMatrixId, 1, GL_FALSE, &proj[0][0]);
 
 
 		scene.gameObjects.get(0)->position = vec3(sinf(Time::time() * 5), 0, 0);
@@ -166,9 +172,6 @@ int main(int argc, char *argv[])
 		
 		scene.update();
 
-		// Matrix
-		glm::mat4 Model = glm::mat4(1.0f);
-		glm::mat4 mvp = Projection * View * Model;
 
 		// Swap buffers
 		glfwSwapBuffers(window);

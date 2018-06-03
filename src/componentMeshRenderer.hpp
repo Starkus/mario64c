@@ -7,6 +7,8 @@ class ComponentMeshRenderer : public Component {
 protected:
 	Model *model;
 
+	void makeModelMatrix(vec3 position, quat rotation, vec3 scale);
+
 public:
 	ComponentMeshRenderer(GameObject*);
 
