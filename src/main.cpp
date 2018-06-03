@@ -31,6 +31,7 @@ using namespace glm;
 
 
 Model model;
+Model model2;
 Scene scene;
 
 
@@ -93,7 +94,7 @@ int main(int argc, char *argv[])
 	}
 	// Load dummy model
 	model.importFromObj("../media/350z.obj");
-	model.importFromDae("../media/skeltest.dae");
+	model2.importFromDae("../media/skeltest.dae");
 
 	// Load some shaders
 	GLuint programID = LoadShaders("vertex.glsl", "fragment.glsl");
@@ -129,7 +130,7 @@ int main(int argc, char *argv[])
 	obj3->position = vec3(-15, 0, 0);
 	obj3->addComponent<ComponentMeshRenderer>();
 	renderer = (ComponentMeshRenderer*)obj3->getComponents().get(-1);
-	renderer->setModel(&model);
+	renderer->setModel(&model2);
 
 	// GAME LOOP
 	do {
