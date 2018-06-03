@@ -70,7 +70,8 @@ void Model::bindBuffers() {
 
 void Model::drawBuffers() {
 	// Draw bound buffers, to bind call bindBuffers() first.
-	glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_SHORT, (void*)0);
+	//glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_SHORT, (void*)0);
+	glDrawRangeElements(GL_TRIANGLES, 10*3, 28*3, (GLsizei)18*3, GL_UNSIGNED_SHORT, (void*)0);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
@@ -119,10 +120,14 @@ int Model::importFromObj(const char *filename) {
 	std::vector<vec2> t_uvs;
 	std::vector<vec3> t_normals;
 
+	// asdasfg
+	std::vector<int> offsets;
+	offsets.push_back(0);
+
 	bool ok = loadOBJ(filename, t_vertices, t_uvs, t_normals);
 
 	if (ok) {
-		indexVBO(t_vertices, t_uvs, t_normals, indices, vertices, uvs, normals);
+		indexVBO(t_vertices, t_uvs, t_normals, offsets, indices, vertices, uvs, normals, offsets);
 
 		makeVBOs();
 	}
@@ -131,7 +136,7 @@ int Model::importFromObj(const char *filename) {
 }
 
 int Model::importFromDae(const char *filename) {
-	int errorcode = loadDae(filename, &vertices, &normals, &uvs, &indices);
+	int errorcode = loadDae(filename, &vertices, &normals, &uvs, &indices, &materials, &offsets);
 
 	if (errorcode != 0)
 		return errorcode;

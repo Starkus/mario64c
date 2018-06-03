@@ -31,7 +31,7 @@ GLFWwindow* window;
 using namespace glm;
 
 
-Model model;
+//Model model;
 Model model2;
 Scene scene;
 
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 	// Load dummy model
-	model.importFromObj("../media/350z.obj");
+	//model.importFromObj("../media/350z.obj");
 	model2.importFromDae("../media/skeltest.dae");
 
 	// Load some shaders
@@ -116,14 +116,14 @@ int main(int argc, char *argv[])
 	obj->scale = vec3(0.2f);
 	obj->addComponent<ComponentMeshRenderer>();
 	ComponentMeshRenderer *renderer =  (ComponentMeshRenderer*) obj->getComponents().get(-1);
-	renderer->setModel(&model);
+	renderer->setModel(&model2);
 
 	GameObject *obj2 = scene.spawn();
 	obj2->scale = vec3(0.15f);
 	obj2->position = vec3(15, 0, 0);
 	obj2->addComponent<ComponentMeshRenderer>();
 	renderer = (ComponentMeshRenderer*)obj2->getComponents().get(-1);
-	renderer->setModel(&model);
+	renderer->setModel(&model2);
 	
 	GameObject *obj3 = scene.spawn();
 	obj3->scale = vec3(0.1f);
@@ -179,10 +179,6 @@ int main(int argc, char *argv[])
 		   glfwWindowShouldClose(window) == 0);
 
 	// Cleanup VBO and shader
-	//glDeleteBuffers(1, &vertexbuffer);
-	//glDeleteBuffers(1, &uvbuffer);
-	//glDeleteBuffers(1, &normalbuffer);
-	//glDeleteBuffers(1, &elementbuffer);
 	glDeleteProgram(programID);
 	glDeleteTextures(1, &image);
 	glDeleteVertexArrays(1, &VertexArrayID);

@@ -6,6 +6,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "material.hpp"
+
 using namespace glm;
 
 class Model {
@@ -15,6 +17,10 @@ private:
 	std::vector<vec2> uvs;
 	std::vector<vec3> normals;
 	std::vector<unsigned short> indices;
+
+	std::vector<Material> materials;
+	// What indices belong to what material index
+	std::vector<int> offsets;
 
 	// GL Buffers
 	GLuint vertexbuffer;
