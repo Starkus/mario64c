@@ -9,7 +9,7 @@ ComponentMeshRenderer::ComponentMeshRenderer(GameObject *owner) : Component(owne
 }
 
 void ComponentMeshRenderer::update() {
-	model->draw(obj->position, obj->scale);
+	model->draw(obj->position, obj->rotation, obj->scale);
 }
 
 void ComponentMeshRenderer::setModel(Model *model) {

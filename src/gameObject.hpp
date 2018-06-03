@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include "component.hpp"
 #include "linkedList.hpp"
@@ -14,6 +15,7 @@ protected:
 
 public:
 	vec3 position = vec3(0);
+	quat rotation = quat(1, 0, 0, 0);
 	vec3 scale = vec3(1.0f);
 
 	void update();

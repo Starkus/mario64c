@@ -4,6 +4,7 @@
 #include <vector>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 using namespace glm;
 
@@ -24,11 +25,12 @@ private:
 	void makeVBOs();
 	void bindBuffers();
 	void drawBuffers();
-	void makeModelMatrix(vec3 position, vec3 scale);
+	void makeModelMatrix(vec3 position, quat rotation, vec3 scale);
 
 public:
 	Model();
-	void draw(vec3 position, vec3 scale);
+	~Model();
+	void draw(vec3 position, quat rotation, vec3 scale);
 
 	int importFromObj(const char*);
 	int importFromDae(const char*);

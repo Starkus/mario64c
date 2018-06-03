@@ -21,6 +21,7 @@ GLFWwindow* window;
 #include "common/vboindexer.hpp"
 
 #include "glcontext.hpp"
+#include "time.hpp"
 #include "model.hpp"
 #include "scene.hpp"
 #include "componentMeshRenderer.hpp"
@@ -107,8 +108,7 @@ int main(int argc, char *argv[])
 
 
 	// Create the game timer
-	clock_t start_time = clock();
-	float time;
+	Time::begin();
 
 
 	// Ssample scene
@@ -134,6 +134,8 @@ int main(int argc, char *argv[])
 
 	// GAME LOOP
 	do {
+		Time::beginTick();
+
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 
@@ -144,12 +146,10 @@ int main(int argc, char *argv[])
 
 		glUseProgram(programID);
 
-		time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
-
 		// Matrices
 		glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 		glm::mat4 View = glm::lookAt(
-			glm::vec3(sinf(time) * 5.0f, 3.0f, 3.0f), // Cam position
+			glm::vec3(sinf(Time::time()) * 5.0f, 3.0f, 3.0f), // Cam position
 			glm::vec3(0, 0, 0), // Cam looking at
 			glm::vec3(0, 1, 0)  // Up
 		);
@@ -160,19 +160,15 @@ int main(int argc, char *argv[])
 		View = getViewMatrix();
 
 
-		scene.gameObjects.get(0)->position = vec3(sinf(time * 50), 0, 0);
+		scene.gameObjects.get(0)->position = vec3(sinf(Time::time() * 5), 0, 0);
+
+		scene.gameObjects.get(2)->rotation = quat(vec3(0, Time::time(), 0));
 		
 		scene.update();
 
 		// Matrix
 		glm::mat4 Model = glm::mat4(1.0f);
 		glm::mat4 mvp = Projection * View * Model;
-
-		// Pass matrix
-		/*glUniformMatrix4fv(MMatrixID, 1, GL_FALSE, &Model[0][0]);
-		glUniformMatrix4fv(VMatrixID, 1, GL_FALSE, &View[0][0]);
-		glUniformMatrix4fv(PMatrixID, 1, GL_FALSE, &Projection[0][0]);
-		glUniformMatrix4fv(MVPMatrixID, 1, GL_FALSE, &mvp[0][0]);*/
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -188,7 +184,7 @@ int main(int argc, char *argv[])
 	//glDeleteBuffers(1, &normalbuffer);
 	//glDeleteBuffers(1, &elementbuffer);
 	glDeleteProgram(programID);
-	//glDeleteTextures(1, &Texture);
+	glDeleteTextures(1, &image);
 	glDeleteVertexArrays(1, &VertexArrayID);
 
 	// Close OpenGL window and terminate GLFW
